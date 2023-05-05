@@ -1,6 +1,6 @@
 library(car)
 library(olsrr)
-#Función colldiag de la librería perturb que actualmente no está en cran R
+#Funcion colldiag de la libreria perturb actualmente no disponible en cran R
 colldiag <- function(mod,scale=TRUE,center=FALSE,add.intercept=TRUE) {
   result <- NULL
   if (center) add.intercept<-FALSE
@@ -35,20 +35,20 @@ result=cbind(condindx,pi)
   result
 }
 
-#FUNCIÓN PARA EXTRAER COEFICIENTES ESTIMADOS SUS IC DEL 95%, VIF'S Y COEFICIENTES ESTANDARIZADOS
+#FUNCION PARA EXTRAER COEFICIENTES ESTIMADOS SUS IC DEL 95%, VIFs Y COEFICIENTES ESTANDARIZADOS
 miscoeficientes=function(modeloreg,datosreg){
 coefi=coef(modeloreg)
 datos2=as.data.frame(scale(datosreg))
 coef.std=c(0,coef(lm(update(formula(modeloreg),~.+0),datos2)))
 limites=confint(modeloreg,level=0.95)
 vifs=c(0,vif(modeloreg))
-resul=data.frame(Estimación=coefi,Limites=limites,Vif=vifs,Coef.Std=coef.std)
+resul=data.frame(Estimacion=coefi,Limites=limites,Vif=vifs,Coef.Std=coef.std)
 cat("Coeficientes estimados, sus I.C, Vifs y Coeficientes estimados estandarizados","\n")
 resul
 }
 
 
-#función de usuario para multicolinealidad
+#funcion de usuario para multicolinealidad
 multicolin=function(modeloRLM,data,center=FALSE){
 if(center==FALSE){
 res=data.frame(rbind(c(NA,NA),ols_coll_diag(modeloRLM)$vif_t[,-1]),ols_coll_diag(modeloRLM)$eig_cindex,row.names=names(coef(modeloRLM)))
@@ -63,16 +63,16 @@ res=data.frame(ols_coll_diag(modeloRLM)$vif_t[,2:3],Eigenvalue=eigenvalue,Ind,ro
 res
 }
 
-#Función para análisis de puntos outliers, de balanceo y de influencia
+#Funcion para anÃ¡lisis de puntos outliers, de balanceo y de influencia
 diaganalysis=function(modelo){
-cat("Resultados de la Función influence.measures")
+cat("Resultados de la Funcion influence.measures")
 cat("\n")
 summary(influence.measures(modelo))
 win.graph()
 infIndexPlot(modelo,cex.lab=1.5,cex=1.5,cex.axis=1.5)
 win.graph()
 cat("\n")
-cat("Resultados que acompañan a gráfica de burbujas")
+cat("Resultados adicionales para la figura de burbujas")
 cat("\n")
 influencePlot(modelo,xlim=c(0,1),cex.lab=1.5,ylim=c(min(rstudent(modelo))-0.2,max(rstudent(modelo))+0.2),cex.axis=2)
 }
