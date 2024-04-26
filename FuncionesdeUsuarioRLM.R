@@ -78,3 +78,14 @@ influencePlot(modelo,xlim=c(0,1),cex.lab=1.5,ylim=c(min(rstudent(modelo))-0.2,ma
 }
 
 
+#Funcion para tabla AMOVA del MRLM requiere libreria rms
+MiAnova=function(model){
+library(rsm)
+name_response=names(model$model)[1]
+nombres=names(model$model)[-1]
+miformula=as.formula(paste(name_response,"~",paste(paste("FO(",paste(nombres,sep="",collapse=","),sep=""),")",sep="")))
+tablaAnova=anova(rsm(miformula))
+rownames(tablaAnova)[1]="Model"
+print(tablaAnova)
+}
+
