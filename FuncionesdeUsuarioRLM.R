@@ -89,3 +89,20 @@ rownames(tablaAnova)[1]="Model"
 print(tablaAnova)
 }
 
+
+#Funcion que despliega correlaciones por pares sin repetir casos
+correlaciones=function(data){
+corre=cor(data)
+names_var=names(data)
+numvar=ncol(data)
+resul1=c()
+resul2=c()
+for(i in 1:(numvar-1)){
+for(j in (i+1):numvar){
+resul1=append(resul1,paste(names_var[i],names_var[j],sep="-"))
+resul2=append(resul2,corre[i,j])
+}
+}
+res=data.frame(variables=resul1,corr=resul2)
+res
+}
