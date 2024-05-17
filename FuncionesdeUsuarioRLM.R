@@ -1,5 +1,4 @@
 library(car)
-library(olsrr)
 #Funcion colldiag de la libreria perturb actualmente no disponible en cran R
 colldiag <- function(mod,scale=TRUE,center=FALSE,add.intercept=TRUE) {
   result <- NULL
@@ -36,10 +35,11 @@ result=cbind(condindx,pi)
 }
 
 #FUNCION PARA EXTRAER COEFICIENTES ESTIMADOS SUS IC DEL 95%, VIFs Y COEFICIENTES ESTANDARIZADOS
-miscoeficientes=function(modeloreg,datosreg){
+miscoeficientes=function(modeloreg){
 coefi=coef(modeloreg)
-datos2=as.data.frame(scale(datosreg))
-coef.std=c(0,coef(lm(update(formula(modeloreg),~.+0),datos2)))
+datosreg=model.frame(modeloreg)
+data=as.data.frame(scale(datosreg))
+coef.std=c(0,coef(lm(update(formula(modeloreg),~.+0),data)))
 limites=confint(modeloreg,level=0.95)
 vifs=c(0,vif(modeloreg))
 resul=data.frame(Estimacion=coefi,Limites=limites,Vif=vifs,Coef.Std=coef.std)
@@ -47,9 +47,10 @@ cat("Coeficientes estimados, sus I.C, Vifs y Coeficientes estimados estandarizad
 resul
 }
 
-
 #funcion de usuario para multicolinealidad
-multicolin=function(modeloRLM,data,center=FALSE){
+multicolin=function(modeloRLM,center=FALSE){
+library(olsrr)
+data=model.frame(modeloRLM)
 if(center==FALSE){
 res=data.frame(rbind(c(NA,NA),ols_coll_diag(modeloRLM)$vif_t[,-1]),ols_coll_diag(modeloRLM)$eig_cindex,row.names=names(coef(modeloRLM)))
 #res=names(coef(modeloRLM))
