@@ -13,6 +13,10 @@ names(datos) #Revisando nombre de variables en el data.frame datos
 MF=lm(punt.Aptitud~Prueba1+Prueba2+Prueba3+Prueba4)
 MiAnova(model=MF)
 #-------------------------------------------------------------------
+#Nota: La función I() de R usada dentro de una formula R tal como las que se usan en la
+#función lm(), impide la interpretacion de operadores tales como "*", "+", "-" y "^", como operadores
+#formula, de modo que son usados como operadores aritmeticos.
+#-------------------------------------------------------------------
 #Ejemplo 1: Test H0: beta1=beta2, beta3=beta4
 #Ajuste del modelo reducido y su ANOVA
 MR1=lm(punt.Aptitud~I(Prueba1+Prueba2)+I(Prueba3+Prueba4))
