@@ -35,6 +35,7 @@ result=cbind(condindx,pi)
 }
 
 #FUNCION PARA EXTRAER COEFICIENTES ESTIMADOS SUS IC DEL 95%, VIFs Y COEFICIENTES ESTANDARIZADOS
+#Version mejorada de "miscoeficientes()" no necesita ingresar el data.frame con datos de la regresion
 miscoeficientes=function(modeloreg){
 coefi=coef(modeloreg)
 datosreg=model.frame(modeloreg)
@@ -48,6 +49,7 @@ resul
 }
 
 #funcion de usuario para multicolinealidad
+#Version mejorada de "multicolin()", no necesita ingresar el data.frame con datos de la regresion
 multicolin=function(modeloRLM,center=FALSE){
 library(olsrr)
 data=model.frame(modeloRLM)
