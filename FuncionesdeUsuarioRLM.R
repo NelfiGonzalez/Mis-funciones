@@ -55,7 +55,6 @@ library(olsrr)
 data=model.frame(modeloRLM)
 if(center==FALSE){
 res=data.frame(rbind(c(NA,NA),ols_coll_diag(modeloRLM)$vif_t[,-1]),ols_coll_diag(modeloRLM)$eig_cindex,row.names=names(coef(modeloRLM)))
-#res=names(coef(modeloRLM))
 }
 if(center==TRUE){
 Ind=colldiag(modeloRLM,center=TRUE)[,1:ncol(data)]
