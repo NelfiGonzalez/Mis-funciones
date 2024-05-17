@@ -65,7 +65,7 @@ res=data.frame(ols_coll_diag(modeloRLM)$vif_t[,2:3],Eigenvalue=eigenvalue,Ind,ro
 res
 }
 
-#Funcion para análisis de puntos outliers, de balanceo y de influencia
+#Funcion para analisis de puntos outliers, de balanceo y de influencia
 diaganalysis=function(modelo){
 cat("Resultados de la Funcion influence.measures")
 cat("\n")
