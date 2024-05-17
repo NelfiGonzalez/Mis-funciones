@@ -46,6 +46,7 @@ apply(matrizX[,-1],2,summary)
 
 #Calculando la inversa de X^t * X
 XtXinversa=solve(t(matrizX)%*%matrizX)
+XtXinversa
 
 #Definiendo vector x_01 y calculando su estadistico h_00 
 newx=matrix(c(1,12,21,30),ncol=1)
