@@ -38,8 +38,6 @@ hii=hatvalues(mod)
 summary(hii)
 
 #Obteniendo matriz de diseno del MRLM
-#matrizX=as.matrix(data.frame(model.matrix(mod)))
-
 matrizX=model.matrix(mod)
 head(matrizX)
 
