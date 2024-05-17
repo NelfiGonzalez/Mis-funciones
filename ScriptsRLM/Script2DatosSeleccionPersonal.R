@@ -1,5 +1,8 @@
 library(car)
 library(rsm)
+#Cargando funciones de usuario desde repositorio en github 
+source("https://raw.githubusercontent.com/NelfiGonzalez/Regresion-DOE/main/FuncionesdeUsuarioRLM.R")
+#Lectura de los datos desde repositorio en github
 datos=read.table("https://raw.githubusercontent.com/NelfiGonzalez/Regresion-DOE/main/datosproblemaseleccionpersonal.csv",header=TRUE,sep=";",dec=",")
 attach(datos)
 names(datos) #Revisando el nombre de las variables guardadas en el data.frame
