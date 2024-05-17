@@ -94,6 +94,12 @@ legend("topleft",legend=c(expression(paste("Ajuste lineal entre",sep=" ",Y,sep="
 #Calculo del coeficiente de correlacion muestral entre la respueta estimada y la respuesta observada
 cor(fitted(modelo),punt.Aptitud)
 
+#graficos de variable agregada (added-variable plot) o graficos de regresion parcial (partial regression plot)
+avPlots(modelo)
+
+#graficos de residuos mas componente (residuals plus component plot)
+crPlots(modelo)
+
 detach(datos) #desanclando variables del data.frame
 
 
