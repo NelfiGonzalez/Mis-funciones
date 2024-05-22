@@ -26,7 +26,7 @@ colldiag <- function(mod,scale=TRUE,center=FALSE,add.intercept=TRUE) {
   pi<-prop.table(Phi,2)
   
   dim(condindx)<-c(length(condindx),1)
-  colnames(condindx)<-"cond.index"
+  colnames(condindx)<-"Condition.Index"
   rownames(condindx)<-1:nrow(condindx)
   colnames(pi)<-colnames(X)
 result=cbind(condindx,pi)
