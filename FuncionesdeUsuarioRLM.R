@@ -13,7 +13,7 @@ colldiag <- function(mod,scale=TRUE,center=FALSE,add.intercept=TRUE) {
   X<-na.omit(X) # delete missing cases
   if (add.intercept) {
     X<-cbind(1,X) # add the intercept
-    colnames(X)[1]<-"intercept"
+    colnames(X)[1]<-"(Intercept)"
   }
   X<-scale(X,scale=scale,center=center)
   
