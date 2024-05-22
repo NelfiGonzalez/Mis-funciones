@@ -69,14 +69,16 @@ res
 diaganalysis=function(modelo){
 cat("Resultados de la Funcion influence.measures")
 cat("\n")
-summary(influence.measures(modelo))
+res1=summary(influence.measures(modelo))
 win.graph()
 infIndexPlot(modelo,cex.lab=1.5,cex=1.5,cex.axis=1.5)
 win.graph()
 cat("\n")
-cat("Resultados adicionales para la figura de burbujas")
+cat("Resultados adicionales para figura de burbujas")
 cat("\n")
-influencePlot(modelo,xlim=c(0,1),cex.lab=1.5,ylim=c(min(rstudent(modelo))-0.2,max(rstudent(modelo))+0.2),cex.axis=2)
+res2=influencePlot(modelo,xlim=c(0,1),cex.lab=1.5,ylim=c(min(rstudent(modelo))-0.2,max(rstudent(modelo))+0.2),cex.axis=2)
+print(res2)
+res=list(res1,res2)
 }
 
 
