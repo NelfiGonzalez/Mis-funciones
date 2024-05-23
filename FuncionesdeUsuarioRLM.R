@@ -95,7 +95,7 @@ print(tablaAnova)
 
 #Funcion que despliega correlaciones por pares sin repetir casos
 correlaciones=function(data){
-stopifnot(class(data)=="data.frame"|class(data)==c("matrix","array"))
+stopifnot(is.data.frame(data)|is.matrix(data))
 if(is.data.frame(data)){
 data=data[,sapply(data,is.numeric)]
 }
