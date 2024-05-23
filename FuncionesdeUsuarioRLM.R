@@ -49,7 +49,7 @@ resul
 }
 
 #funcion de usuario para multicolinealidad
-#Version mejorada de "multicolin()", no necesita ingresar el data.frame con datos de la regresion
+#Version mejorada de "multicolin()", no necesita ingresar el data.frame con datos de la regresion. Requiere libreria olsrr
 multicolin=function(modeloRLM,center=FALSE){
 library(olsrr)
 data=model.frame(modeloRLM)
@@ -65,7 +65,7 @@ res=data.frame(ols_coll_diag(modeloRLM)$vif_t[,2:3],Eigenvalue=eigenvalue,Ind,ro
 res
 }
 
-#Funcion para analisis de puntos outliers, de balanceo y de influencia
+#Funcion para analisis de puntos outliers, de balanceo y de influencia. Requiere libreria car
 diaganalysis=function(modelo){
 cat("Resultados de la Funcion influence.measures")
 cat("\n")
@@ -82,7 +82,7 @@ res=list(res1=res1,res2=res2)
 }
 
 
-#Funcion para tabla AMOVA del MRLM requiere libreria rms
+#Funcion para tabla ANOVA del MRLM requiere libreria rms
 MiAnova=function(model){
 library(rsm)
 name_response=names(model$model)[1]
