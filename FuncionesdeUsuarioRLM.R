@@ -93,9 +93,9 @@ rownames(tablaAnova)[1]="Model"
 print(tablaAnova)
 }
 
-
 #Funcion que despliega correlaciones por pares sin repetir casos
 correlaciones=function(data){
+data=data[,sapply(data,is.numeric)]
 corre=cor(data)
 names_var=names(data)
 numvar=ncol(data)
