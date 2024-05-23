@@ -78,8 +78,7 @@ cat("Resultados adicionales para figura de burbujas")
 cat("\n")
 res2=influencePlot(modelo,xlim=c(0,1),cex.lab=1.5,ylim=c(min(rstudent(modelo))-0.2,max(rstudent(modelo))+0.2),cex.axis=2)
 print(res2)
-res=list(res1=res1,res2=res2)
-res  
+res=list(res1=res1,res2=res2)  
 }
 
 
