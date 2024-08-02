@@ -5,7 +5,7 @@ library(rsm)
 source("https://raw.githubusercontent.com/NelfiGonzalez/Regresion-DOE/main/FuncionesdeUsuarioRLM.R")
 
 #Lectura datos serie de tiempo simulada
-datos=scan("https://raw.githubusercontent.com/NelfiGonzalez/Regresion-DOE/main/serie2simul.txt",,sep=" ",dec=".",skip=1)
+datos=scan("https://raw.githubusercontent.com/NelfiGonzalez/Regresion-DOE/main/serie2simul.txt",sep=" ",dec=".",skip=1)
 
 #Convirtiendo en serie de tiempo al conjunto de datos
 #En la funcion ts() freq=12 indica que por anualidad se registrasn 12 valores (cada mes)
