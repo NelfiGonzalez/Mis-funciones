@@ -128,3 +128,11 @@ res=data.frame(variables=resul1,corr=resul2)
 res
 }
 
+#Funcion de usuario pruebaDW1() para evaluar el test Durbin-Watson para autocorrelacion de orden 1 en un MRLM
+pruebaDW1=function(modelo){
+dwneg=durbinWatsonTest(modelo,max.lag=1,method="normal",alternative="negative")
+dwpos=durbinWatsonTest(modelo,max.lag=1,method="normal",alternative="positive")
+res=data.frame(dwneg$r,dwneg$dw,dwpos$p,dwneg$p,row.names="Resultados")
+names(res)=c("rho(1) estimado","Estadistico D-W","VP H1: rho(1)>0","VP H1: rho(1)<0")
+res
+}
