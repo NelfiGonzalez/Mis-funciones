@@ -95,11 +95,11 @@ print(tablaAnova)
 
 #Funcion paratabla ANOVA del modelo con test de carencia de ajuste, requiere libreria rms
 anovLOF=function(mod){
-  library(rsm)
-  rsp=names(attr(mod$terms, "dataClasses"))[1]
-  fct=names(attr(mod$terms, "dataClasses"))[-1]
-  fml=as.formula(paste(rsp,"~",paste0("FO(",paste(fct,collapse = ","),")")))
-  tabla=summary(rsm(fml))$lof
+library(rsm)
+rsp=names(attr(mod$terms, "dataClasses"))[1]
+fct=names(attr(mod$terms, "dataClasses"))[-1]
+fml=as.formula(paste(rsp,"~",paste0("FO(",paste(fct,collapse = ","),")")))
+tabla=summary(rsm(fml))$lof
 rownames(tabla)[1]="Model"
 print(tabla)
 }
