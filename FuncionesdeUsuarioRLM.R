@@ -93,7 +93,7 @@ rownames(tablaAnova)[1]="Model"
 print(tablaAnova)
 }
 
-#Funcion paratabla ANOVA del modelo con test de carencia de ajuste, requiere libreria rms
+#Funcion para tabla ANOVA del modelo con test de carencia de ajuste, requiere libreria rms
 anovLOF=function(mod){
 library(rsm)
 rsp=names(attr(mod$terms, "dataClasses"))[1]
