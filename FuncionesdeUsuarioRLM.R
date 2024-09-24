@@ -35,7 +35,6 @@ result=cbind(condindx,pi)
 }
 
 #FUNCION PARA EXTRAER COEFICIENTES ESTIMADOS SUS IC DEL 95%, VIFs Y COEFICIENTES ESTANDARIZADOS
-#Version mejorada de "miscoeficientes()" no necesita ingresar el data.frame con datos de la regresion
 miscoeficientes=function(modeloreg){
 coefi=coef(modeloreg)
 datosreg=model.frame(modeloreg)
@@ -49,7 +48,7 @@ resul
 }
 
 #funcion de usuario para multicolinealidad
-#Version mejorada de "multicolin()", no necesita ingresar el data.frame con datos de la regresion. Requiere libreria olsrr
+#Requiere libreria olsrr
 multicolin=function(modeloRLM,center=FALSE){
 library(olsrr)
 data=model.frame(modeloRLM)
@@ -65,22 +64,79 @@ res=data.frame(ols_coll_diag(modeloRLM)$vif_t[,2:3],Eigenvalue=eigenvalue,Ind,ro
 res
 }
 
-#Funcion para analisis de puntos outliers, de balanceo y de influencia. Requiere libreria car
-diaganalysis=function(modelo){
-cat("Resultados de la Funcion influence.measures")
-cat("\n")
-res1=summary(influence.measures(modelo))
+#Funcion para analisis de puntos outliers, de balanceo y de influencia. Requiere librerias car y olsrr
+diag_obs=function(model,plot.add=TRUE){
+library(car)
+library(olsrr)
+data=model$model
 win.graph()
-infIndexPlot(modelo,cex.lab=1.5,cex=1.5,cex.axis=1.5)
+infIndexPlot(model,cex.lab=1,cex=1.5,cex.axis=1)
+cat("\n")
+#cat("Results for Observations Labeled in the Bubble Plot: Studentized Residuals vs. Cook's D")
+#cat("\n")
 win.graph()
+res0=influencePlot(model,xlim=c(0,1),cex.lab=1,ylim=c(min(rstudent(model))-0.2,max(rstudent(model))+0.2),cex.axis=1)
+if(is.data.frame(res0)){
+cat("Results for Observations Labeled in the Bubble Plot: Studentized Residuals vs. Cook's D")
 cat("\n")
-cat("Resultados adicionales para figura de burbujas")
-cat("\n")
-res2=influencePlot(modelo,xlim=c(0,1),cex.lab=1.5,ylim=c(min(rstudent(modelo))-0.2,max(rstudent(modelo))+0.2),cex.axis=2)
-print(res2)
-res=list(res1=res1,res2=res2)  
+print(res0)
 }
-
+DFBetas=dfbetas(model)
+namesdfbetas=c("dfbeta.0",paste0("dfbeta.",abbreviate(colnames(DFBetas)[-1])))
+#Cotas en notas de clase
+#Para los leverage (balanceo)
+Critleverage=2*mean(hatvalues(model))
+#Para la distancia de Cook
+CritCook=4/(nrow(data)-length(coef(model)))
+#Para los DFbeta
+CritDFBetas=2/sqrt(nrow(data))
+#Para |DFFIT|
+CritDFFIT=2*sqrt(length(coef(model))/nrow(data))
+CritRstudent=2
+#para |COVRATIO-1|
+CritCOVRATIO=3*length(coef(model))/nrow(data)
+Cotas=data.frame(dfbeta=CritDFBetas,dffit=CritDFFIT,cov.r=CritCOVRATIO,Cook.d=CritCook,hat=Critleverage,StudRes=CritRstudent)
+res1=cbind(abs(DFBetas)[,1L:ncol(DFBetas)]>CritDFBetas,dffit=abs(dffits(model))>CritDFFIT,cov.r=abs(covratio(model)-1)>CritCOVRATIO,cook.d=cooks.distance(model)>CritCook,hat=hatvalues(model)>Critleverage,StudRes=abs(rstudent(model))>=CritRstudent)
+colnames(res1)[1:ncol(DFBetas)]=namesdfbetas
+res2=data.frame(ifelse(abs(DFBetas)[,1L:ncol(DFBetas)]>CritDFBetas,paste0(round(DFBetas,5),"_*"),round(DFBetas,5)),
+dffits=ifelse(abs(dffits(model))>CritDFFIT,paste0(round(dffits(model),5),"_*"),round(dffits(model),5)),
+cov.r=ifelse(abs(covratio(model)-1)>CritCOVRATIO,paste0(round(covratio(model),5),"_*"),round(covratio(model),5)),
+cook.d=ifelse(cooks.distance(model)>CritCook,paste0(round(cooks.distance(model),5),"_*"),round(cooks.distance(model),5)),
+hat=ifelse(hatvalues(model)>Critleverage,paste0(round(hatvalues(model),5),"_*"),round(hatvalues(model),5)),
+StudRes=ifelse(abs(rstudent(model))>=CritRstudent,paste0(round(rstudent(model),5),"_*"),round(rstudent(model),5)))
+colnames(res2)=colnames(res1)
+test=res2[apply(res1+0,1,sum)>0,]
+if(nrow(test)!=0){
+cat("\n")
+cat("Potentially influential and/or leverage and/or outlier observations of")
+cat("\n")
+print(model$call)
+cat("\n")
+cat("Threshold values")
+cat("\n")
+print(Cotas)
+cat("\n")
+print(test)
+res=test
+} 
+else if(nrow(test)==0){
+print("There are no potentially influential and/or Leverage and/or outlier observations")
+res="There are no potentially influential and/or Leverage and/or Outlier observations"
+}
+if(plot.add==TRUE){
+win.graph()
+ols_plot_dffits(model)
+win.graph()
+ols_plot_cooksd_chart(model)
+win.graph()
+ols_plot_resid_stand(model)
+#win.graph()
+ols_plot_dfbetas(model)
+}
+else if(plot.add==FALSE){
+res=res
+}
+}
 
 #Funcion para tabla ANOVA del MRLM requiere libreria rms
 MiAnova=function(model){
