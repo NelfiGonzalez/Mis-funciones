@@ -127,7 +127,7 @@ if(plot.add==TRUE){
 win.graph()
 ols_plot_dffits(model)
 win.graph()
-ols_plot_cooksd_chart(model)
+ols_plot_cooksd_chart(model,type=2)
 win.graph()
 ols_plot_resid_stand(model)
 #win.graph()
