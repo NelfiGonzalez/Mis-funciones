@@ -96,14 +96,14 @@ CritRstudent=2
 #para |COVRATIO-1|
 CritCOVRATIO=3*length(coef(model))/nrow(data)
 Cotas=data.frame(dfbeta=CritDFBetas,dffit=CritDFFIT,cov.r=CritCOVRATIO,Cook.d=CritCook,hat=Critleverage,StudRes=CritRstudent)
-res1=cbind(abs(DFBetas)[,1L:ncol(DFBetas)]>CritDFBetas,dffit=abs(dffits(model))>CritDFFIT,cov.r=abs(covratio(model)-1)>CritCOVRATIO,cook.d=cooks.distance(model)>CritCook,hat=hatvalues(model)>Critleverage,StudRes=abs(rstudent(model))>=CritRstudent)
+res1=cbind(abs(DFBetas)[,1L:ncol(DFBetas)]>CritDFBetas,dffit=abs(dffits(model))>CritDFFIT,cov.r=abs(covratio(model)-1)>CritCOVRATIO,cook.d=cooks.distance(model)>CritCook,hat=hatvalues(model)>Critleverage,StudRes=abs(rstudent(model))>CritRstudent)
 colnames(res1)[1:ncol(DFBetas)]=namesdfbetas
 res2=data.frame(ifelse(abs(DFBetas)[,1L:ncol(DFBetas)]>CritDFBetas,paste0(round(DFBetas,5),"_*"),round(DFBetas,5)),
 dffits=ifelse(abs(dffits(model))>CritDFFIT,paste0(round(dffits(model),5),"_*"),round(dffits(model),5)),
 cov.r=ifelse(abs(covratio(model)-1)>CritCOVRATIO,paste0(round(covratio(model),5),"_*"),round(covratio(model),5)),
 cook.d=ifelse(cooks.distance(model)>CritCook,paste0(round(cooks.distance(model),5),"_*"),round(cooks.distance(model),5)),
 hat=ifelse(hatvalues(model)>Critleverage,paste0(round(hatvalues(model),5),"_*"),round(hatvalues(model),5)),
-StudRes=ifelse(abs(rstudent(model))>=CritRstudent,paste0(round(rstudent(model),5),"_*"),round(rstudent(model),5)))
+StudRes=ifelse(abs(rstudent(model))>CritRstudent,paste0(round(rstudent(model),5),"_*"),round(rstudent(model),5)))
 colnames(res2)=colnames(res1)
 test=res2[apply(res1+0,1,sum)>0,]
 if(nrow(test)!=0){
