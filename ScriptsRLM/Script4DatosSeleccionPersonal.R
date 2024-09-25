@@ -103,17 +103,17 @@ bptest(modelo,studentize=FALSE)
 #Version Breusch-Pagan estudentizado con varianza como funcion lineal de los k predictores
 bptest(modelo,studentize=TRUE)
 #----------------------------------------------------------------------------------------------------------------------------------
-#Resultados para diagnosticar observaciones de balanceo, influenciales y outliers
-#genera varias graficas de diagnosticos y salida R con resultados de diagnosticos (si hay observaciones de balenceo, influenciales y/o outliers)
+#Resultados para diagnosticar observaciones de balanceo, influenciales y atipicas
+#genera varias graficas de diagnosticos y salida R con resultados de diagnosticos (si hay observaciones de balanceo, influenciales y/o atipicas)
 diag_obs(model=modelo,plot.add=TRUE)
 
 #Esta ejecucion solo genera dos graficos: "Diagnostic Plots" y grafico de burbujas de residuos estudentizados vs. los levarage
-#Ademas crea un data.frame si se encuentra obs. influyentes, de balanceo y/o atípicas segun cotas en notas de clase
+#Ademas crea un data.frame si se encuentra obs. influyentes, de balanceo y/o atipicas segun cotas en notas de clase
 #Informando para tales obs. los valores de dfbetas, dffits, covratios,h_ii, residuos estudentizados externamente
 aux=diag_obs(model=modelo,plot.add=FALSE)
 aux
 
-#Exportando al directorio de trabajo tabla con medidas diagnosticadas sobre obs. identifcadas
+#Exportando al directorio de trabajo tabla con medidas diagnosticadas sobre obs. identificadas
 write.csv2(aux,"diagnosticos_modelo_puntAptitud.csv",row.names=TRUE)
 #----------------------------------------------------------------------------------------------------------------------------------
 
