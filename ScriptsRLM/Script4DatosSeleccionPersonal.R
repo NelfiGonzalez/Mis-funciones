@@ -57,7 +57,6 @@ residualPlots(modelo,tests=FALSE,type="rstudent",quadratic=FALSE,layout=c(2,3),y
 #o bien cada una de las graficas con la funcion plot
 win.graph(width=9.5,height=6)
 layout(rbind(c(1,2,3),c(4,5,6)))
-plot(fitted(modelo),rstudent(modelo),ylim=c(-3,3),cex=1.5);abline(h=c(-2,0,2),col=2,lty=2)
 plot(Prueba1,rstudent(modelo),ylim=c(-3,3),cex=1.5);abline(h=c(-2,0,2),col=2,lty=2)
 plot(Prueba2,rstudent(modelo),ylim=c(-3,3),cex=1.5);abline(h=c(-2,0,2),col=2,lty=2)
 plot(Prueba3,rstudent(modelo),ylim=c(-3,3),cex=1.5);abline(h=c(-2,0,2),col=2,lty=2)
