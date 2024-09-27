@@ -1,5 +1,5 @@
-#Leer archivo datosejemBoxCox.csv
-datos=read.table(file.choose(),header=T,sep=";",dec=",")
+#Leer archivo datosejemBoxCox.csv desde repositorio en Github
+datos=read.table("https://raw.githubusercontent.com/NelfiGonzalez/Regresion-DOE/main/datosejemBoxCox.csv",header=TRUE,sep=";",dec=",")
 attach(datos)
 
 names(datos)
