@@ -140,11 +140,13 @@ res=res
 
 #Funcion para tabla ANOVA del MRLM requiere libreria rms
 MiAnova=function(model){
+matrixX=as.data.frame(model.matrix(model)[,-1])
+names(matrixX)=paste0("x",1:ncol(matrixX))
 library(rsm)
 name_response=names(model$model)[1]
-nombres=names(model$model)[-1]
+nombres=names(matrixX)
 miformula=as.formula(paste(name_response,"~",paste(paste("FO(",paste(nombres,sep="",collapse=","),sep=""),")",sep="")))
-tablaAnova=anova(rsm(miformula))
+tablaAnova=anova(rsm(miformula,data=matrixX))
 rownames(tablaAnova)[1]="Model"
 print(tablaAnova)
 }
