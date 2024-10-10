@@ -146,7 +146,7 @@ response=model$model[,1]
 name_response=names(model$model)[1]
 names(matrixX)=paste0("x",1:ncol(matrixX))
 nombres=names(matrixX)
-data=data.frame(model$model[,1],matrixX)
+data=data.frame(response,matrixX)
 names(data)=c(name_response,nombres)
 miformula=as.formula(paste(name_response,"~",paste(paste("FO(",paste(nombres,sep="",collapse=","),sep=""),")",sep="")))
 tablaAnova=anova(rsm(miformula,data=data))
@@ -158,13 +158,19 @@ print(tablaAnova)
 #Funcion para tabla ANOVA del modelo con test de carencia de ajuste, requiere libreria rms
 anovLOF=function(mod){
 library(rsm)
+matrixX=data.frame(model.matrix(mod)[,-1])
+names(matrixX)=paste0("x",1:ncol(matrixX))
+fct=names(matrixX)
+response=mod$model[,1]
 rsp=names(attr(mod$terms, "dataClasses"))[1]
-fct=names(attr(mod$terms, "dataClasses"))[-1]
+data=data.frame(response,matrixX)
+names(data)=c(rsp,fct)
 fml=as.formula(paste(rsp,"~",paste0("FO(",paste(fct,collapse = ","),")")))
-tabla=summary(rsm(fml))$lof
+tabla=summary(rsm(fml,data=data))$lof
 rownames(tabla)[1]="Model"
 print(tabla)
 }
+
 
 #Funcion que despliega correlaciones por pares sin repetir casos
 correlaciones=function(data){
