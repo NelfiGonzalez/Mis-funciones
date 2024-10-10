@@ -140,16 +140,20 @@ res=res
 
 #Funcion para tabla ANOVA del MRLM requiere libreria rms
 MiAnova=function(model){
-matrixX=as.data.frame(model.matrix(model)[,-1])
-names(matrixX)=paste0("x",1:ncol(matrixX))
 library(rsm)
+matrixX=data.frame(model.matrix(model)[,-1])
+response=model$model[,1]
 name_response=names(model$model)[1]
+names(matrixX)=paste0("x",1:ncol(matrixX))
 nombres=names(matrixX)
+data=data.frame(model$model[,1],matrixX)
+names(data)=c(name_response,nombres)
 miformula=as.formula(paste(name_response,"~",paste(paste("FO(",paste(nombres,sep="",collapse=","),sep=""),")",sep="")))
-tablaAnova=anova(rsm(miformula,data=matrixX))
+tablaAnova=anova(rsm(miformula,data=data))
 rownames(tablaAnova)[1]="Model"
 print(tablaAnova)
 }
+
 
 #Funcion para tabla ANOVA del modelo con test de carencia de ajuste, requiere libreria rms
 anovLOF=function(mod){
